@@ -26,11 +26,18 @@ This project is built using a modern, lightweight Python stack designed for fast
 
 ### Running the Services
 
-**To run the API Server (Swagger UI)**:
+**To run the API Server (Backend)**:
 ```bash
 uvicorn api:app --reload
 ```
-Once running, navigate to `http://127.0.0.1:8000/docs` in your browser to interact with the API visually.
+Once running, the backend API is available at `http://127.0.0.1:8000`. You can view the Swagger UI at `http://127.0.0.1:8000/docs`.
+
+**To run the Web Dashboard (Frontend)**:
+Open a new terminal (leave the backend running) and start the local server:
+```bash
+python -m http.server 8080 --directory frontend
+```
+Once running, navigate to `http://127.0.0.1:8080` in your browser to access the premium Help Desk dashboard and AI Chat!
 
 **To run the MCP Server**:
 ```bash
@@ -57,8 +64,3 @@ These endpoints are exposed via `api.py`:
 
 ---
 
-## Screenshots & Demo
-
-Below is a demonstration of the REST API Layer being tested via the automatically generated FastAPI Swagger UI.
-
-![API Testing Demo](./assets/demo.webp)
