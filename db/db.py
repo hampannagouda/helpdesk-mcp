@@ -55,9 +55,12 @@ def get_all_tickets():
     conn = connect_db()
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM tickets")
+    cursor.execute("SELECT id, title, priority, status FROM tickets")
 
-    tickets = cursor.fetchall()
+    tickets = [
+        {"id": row[0], "title": row[1], "priority": row[2], "status": row[3]}
+        for row in cursor.fetchall()
+    ]
 
     conn.close()
 
@@ -92,10 +95,11 @@ def get_ticket_by_id(ticket_id):
     cursor = conn.cursor()
 
     cursor.execute("""
-    SELECT * FROM tickets WHERE id = ?
+    SELECT id, title, priority, status FROM tickets WHERE id = ?
     """, (ticket_id,))
 
-    ticket = cursor.fetchone()
+    row = cursor.fetchone()
+    ticket = {"id": row[0], "title": row[1], "priority": row[2], "status": row[3]} if row else None
 
     conn.close()
 
@@ -134,6 +138,31 @@ def update_ticket_priority(ticket_id, new_priority):
 
     conn.commit()
     conn.close()
+
+# -----------------------------
+# Generic Update Ticket
+# -----------------------------
+def update_ticket(ticket_id, updates):
+    if not updates:
+        return
+    
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    fields = []
+    values = []
+    for key, value in updates.items():
+        fields.append(f"{key} = ?")
+        values.append(value)
+    
+    values.append(ticket_id)
+    
+    query = f"UPDATE tickets SET {', '.join(fields)} WHERE id = ?"
+    cursor.execute(query, tuple(values))
+
+    conn.commit()
+    conn.close()
+
 
 # -----------------------------
 # Delete Ticket
