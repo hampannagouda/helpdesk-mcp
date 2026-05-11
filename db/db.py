@@ -33,7 +33,7 @@ def create_table():
 # -----------------------------
 # Create Ticket
 # -----------------------------
-def create_ticket(title, priority, status="Open"):
+def create_ticket(title, priority="Unassigned", status="Open"):
     conn = connect_db()
     cursor = conn.cursor()
 
@@ -41,11 +41,14 @@ def create_ticket(title, priority, status="Open"):
     INSERT INTO tickets (title, priority, status)
     VALUES (?, ?, ?)
     """, (title, priority, status))
+    
+    ticket_id = cursor.lastrowid
 
     conn.commit()
     conn.close()
 
-    print("Ticket created successfully!")
+    print(f"Ticket created successfully with ID: {ticket_id}!")
+    return ticket_id
 
 
 # -----------------------------
