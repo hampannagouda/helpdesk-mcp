@@ -65,6 +65,26 @@ def get_all_tickets():
 
 
 # -----------------------------
+# Get Open Tickets
+# -----------------------------
+def get_open_tickets():
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT id, title, priority, status FROM tickets WHERE status = 'Open'")
+
+    # Map to dictionaries for better MCP tool output
+    tickets = [
+        {"ticket_id": row[0], "title": row[1], "priority": row[2], "status": row[3]}
+        for row in cursor.fetchall()
+    ]
+
+    conn.close()
+
+    return tickets
+
+
+# -----------------------------
 # Get Ticket By ID
 # -----------------------------
 def get_ticket_by_id(ticket_id):
@@ -98,6 +118,22 @@ def update_ticket_status(ticket_id, new_status):
     conn.commit()
     conn.close()
 
+
+# -----------------------------
+# Update Ticket Priority
+# -----------------------------
+def update_ticket_priority(ticket_id, new_priority):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    UPDATE tickets
+    SET priority = ?
+    WHERE id = ?
+    """, (new_priority, ticket_id))
+
+    conn.commit()
+    conn.close()
 
 # -----------------------------
 # Delete Ticket
