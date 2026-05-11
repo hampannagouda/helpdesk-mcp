@@ -27,8 +27,6 @@ def create_table():
     conn.commit()
     conn.close()
 
-    print("Tickets table ready!")
-
 
 # -----------------------------
 # Create Ticket
@@ -47,7 +45,6 @@ def create_ticket(title, priority="Unassigned", status="Open"):
     conn.commit()
     conn.close()
 
-    print(f"Ticket created successfully with ID: {ticket_id}!")
     return ticket_id
 
 
@@ -101,8 +98,6 @@ def update_ticket_status(ticket_id, new_status):
     conn.commit()
     conn.close()
 
-    print("Ticket status updated!")
-
 
 # -----------------------------
 # Delete Ticket
@@ -118,8 +113,6 @@ def delete_ticket(ticket_id):
 
     conn.commit()
     conn.close()
-
-    print("Ticket deleted successfully!")
 
 
 # -----------------------------
