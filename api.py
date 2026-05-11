@@ -1,9 +1,14 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
 from typing import Optional, List
 from db.db import create_ticket, get_all_tickets, get_ticket_by_id, update_ticket
 
 app = FastAPI(title="Help Desk Ticket API", description="API for managing Help Desk Tickets")
+
+@app.get("/", include_in_schema=False)
+def root():
+    return RedirectResponse(url="/docs")
 
 # Pydantic Models
 class TicketCreate(BaseModel):
