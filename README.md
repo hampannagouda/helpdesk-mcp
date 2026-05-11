@@ -1,57 +1,64 @@
 # Help Desk Ticket MCP Server
 
-A Model Context Protocol (MCP) server for managing IT support tickets. This project exposes essential help desk operations as MCP tools, allowing AI assistants to interact with the ticket database programmatically.
+A Model Context Protocol (MCP) server and RESTful API for managing IT support tickets. This project exposes essential help desk operations as MCP tools and HTTP endpoints, allowing AI assistants and web clients to interact with the ticket database programmatically.
 
-## Overview
+## Architecture
 
-The Help Desk Ticket MCP Server is built using Python, SQLite, and the FastMCP library. It provides a structured database schema for tickets and will eventually expose both REST APIs and MCP tools for various help desk workflows.
+This project is built using a modern, lightweight Python stack designed for fast iteration and compatibility with the Model Context Protocol.
 
-### Core Features
+- **Database Layer**: SQLite (`tickets.db`). All CRUD operations are abstracted through `db/db.py`.
+- **MCP Server Layer**: Powered by `FastMCP`. Exposes database functions directly as AI-consumable tools over `stdio`.
+- **API Layer**: Powered by `FastAPI`. Exposes the same database functions as standard RESTful endpoints (`POST`, `PATCH`, `GET`), allowing easy frontend integration and manual testing via Swagger UI.
 
-- **Create support tickets** (Currently available via MCP tool)
-- **Assign priority** (Planned)
-- **Update ticket status** (Planned)
-- **View open tickets** (Planned)
-- **Assign tickets to support staff** (Planned)
+## Setup Steps
 
-## Project Structure
+1. **Prerequisites**: Ensure you have Python 3.8+ installed on your machine.
+2. **Install Dependencies**:
+   Install the required Python packages (FastAPI, Uvicorn, and MCP):
+   ```bash
+   pip install mcp fastapi uvicorn pydantic
+   ```
+3. **Initialize the Database**:
+   Run the database script once to generate `tickets.db` and the corresponding tables.
+   ```bash
+   python db/db.py
+   ```
 
-- `db/db.py`: Contains the SQLite database connection and operations (CRUD).
-- `mcp_server.py`: The FastMCP server implementation that registers tools.
-- `main.py`: A script to test basic database operations.
-- `tickets.db`: The local SQLite database file.
-- `requirements.md`, `disign.md`, `tasks.md`: Project documentation and specifications.
+### Running the Services
 
-## Prerequisites
-
-- Python 3.8+
-- [mcp](https://pypi.org/project/mcp/) library (FastMCP)
-
-Install dependencies using:
+**To run the API Server (Swagger UI)**:
 ```bash
-pip install mcp
+uvicorn api:app --reload
 ```
+Once running, navigate to `http://127.0.0.1:8000/docs` in your browser to interact with the API visually.
 
-## Running the Server
-
-To start the MCP server:
-
+**To run the MCP Server**:
 ```bash
-python mcp_server.py
+npx @modelcontextprotocol/inspector python mcp_server.py
 ```
+*(This starts the interactive MCP Inspector, allowing you to test the AI tools directly in your browser)*
 
-## Available MCP Tools
+---
 
-### `create_ticket(title: str) -> int`
-Creates a new support ticket in the database.
-- **Inputs**: `title` (String) - The issue description or title.
-- **Outputs**: Returns the generated `ticket_id` (Integer).
+## Tools & Endpoints
 
-## Development Phases
+### 🤖 MCP Tools
+These tools are exposed via `mcp_server.py` for direct AI consumption:
+- `create_ticket(title: str)`: Creates a new support ticket and returns the ID.
+- `assign_priority(ticket_id: int, priority: str)`: Updates a ticket's priority level.
+- `resolve_ticket(ticket_id: int)`: Marks a ticket's status as "Resolved".
+- `list_open_tickets()`: Retrieves all active tickets with an "Open" status.
 
-This project is being developed in phases:
-1. **Phase 1-2**: Setup project structure and SQLite database.
-2. **Phase 3-4**: MCP Server Development & Tools Layer (Current).
-3. **Phase 5+**: API Endpoints, Business Logic, and Deployment.
+### 🌐 REST API Endpoints
+These endpoints are exposed via `api.py`:
+- `POST /tickets`: Create a new ticket (accepts title, optional priority and status).
+- `GET /tickets`: Retrieve a list of all tickets.
+- `PATCH /tickets/{id}`: Update an existing ticket's attributes (title, priority, status).
 
-Check `tasks.md` for a comprehensive list of tasks.
+---
+
+## Screenshots & Demo
+
+Below is a demonstration of the REST API Layer being tested via the automatically generated FastAPI Swagger UI.
+
+![API Testing Demo](./assets/demo.webp)
