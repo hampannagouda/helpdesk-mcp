@@ -77,3 +77,6 @@
 38. Add admin dashboard
 39. Add AI-based ticket classification
 40. Add analytics and reporting
+
+uvicorn api:app --reload
+python -m http.server 8080 --directory frontend
