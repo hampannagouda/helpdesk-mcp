@@ -57,8 +57,3 @@ These endpoints are exposed via `api.py`:
 
 ---
 
-## Screenshots & Demo
-
-Below is a demonstration of the REST API Layer being tested via the automatically generated FastAPI Swagger UI.
-
-![API Testing Demo](./assets/demo.webp)
