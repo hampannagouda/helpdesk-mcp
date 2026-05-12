@@ -1,4 +1,4 @@
-from db.db import *
+from app.db import *
 
 # Create table
 create_table()

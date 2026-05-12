@@ -6,7 +6,7 @@ from typing import Optional, List
 import os
 from dotenv import load_dotenv
 from google import genai
-from db.db import create_ticket, get_all_tickets, get_ticket_by_id, update_ticket
+from app.db import create_ticket, get_all_tickets, get_ticket_by_id, update_ticket
 
 # Load environment variables
 load_dotenv()

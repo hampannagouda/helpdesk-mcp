@@ -1,5 +1,5 @@
 from mcp.server.fastmcp import FastMCP
-from db.db import (
+from app.db import (
     create_ticket as db_create_ticket,
     update_ticket_priority as db_update_priority,
     update_ticket_status as db_update_status,
