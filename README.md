@@ -21,14 +21,14 @@ This project is built using a modern, lightweight Python stack designed for fast
 3. **Initialize the Database**:
    Run the database script once to generate `tickets.db` and the corresponding tables.
    ```bash
-   python db/db.py
+   python app/db.py
    ```
 
 ### Running the Services
 
 **To run the API Server (Backend)**:
 ```bash
-uvicorn api:app --reload
+uvicorn app.api:app --reload
 ```
 Once running, the backend API is available at `http://127.0.0.1:8000`. You can view the Swagger UI at `http://127.0.0.1:8000/docs`.
 
@@ -41,7 +41,7 @@ Once running, navigate to `http://127.0.0.1:8080` in your browser to access the 
 
 **To run the MCP Server**:
 ```bash
-npx @modelcontextprotocol/inspector python mcp_server.py
+npx @modelcontextprotocol/inspector python app/mcp_server.py
 ```
 *(This starts the interactive MCP Inspector, allowing you to test the AI tools directly in your browser)*
 
@@ -50,14 +50,14 @@ npx @modelcontextprotocol/inspector python mcp_server.py
 ## Tools & Endpoints
 
 ### 🤖 MCP Tools
-These tools are exposed via `mcp_server.py` for direct AI consumption:
+These tools are exposed via `app/mcp_server.py` for direct AI consumption:
 - `create_ticket(title: str)`: Creates a new support ticket and returns the ID.
 - `assign_priority(ticket_id: int, priority: str)`: Updates a ticket's priority level.
 - `resolve_ticket(ticket_id: int)`: Marks a ticket's status as "Resolved".
 - `list_open_tickets()`: Retrieves all active tickets with an "Open" status.
 
 ### 🌐 REST API Endpoints
-These endpoints are exposed via `api.py`:
+These endpoints are exposed via `app/api.py`:
 - `POST /tickets`: Create a new ticket (accepts title, optional priority and status).
 - `GET /tickets`: Retrieve a list of all tickets.
 - `PATCH /tickets/{id}`: Update an existing ticket's attributes (title, priority, status).
