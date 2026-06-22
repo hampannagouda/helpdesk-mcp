@@ -1,0 +1,11 @@
+pip install -r requirements.txt
+python app/db.py
+python -m scripts.main
+//python scripts/verify_mcp.py
+//python -m uvicorn app.api:app --host 127.0.0.1 --port 8001
+//python -m http.server 8080 --directory frontend   (http://127.0.0.1:8080/)
+python -m uvicorn app.api:app --reload --port 8001
+python -m http.server 8080 --directory frontend
+npx @modelcontextprotocol/inspector python -m app.mcp_server
+node -v
+winget --version

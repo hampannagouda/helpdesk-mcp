@@ -5,10 +5,9 @@ from mcp.client.stdio import stdio_client
 async def main():
     print("Starting MCP Client...")
     
-    # Configure the parameters to start the MCP server
     server_params = StdioServerParameters(
         command="python",
-        args=["mcp_server.py"],
+        args=["-m", "app.mcp_server"],
     )
 
     # Connect to the server using standard I/O

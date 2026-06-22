@@ -28,9 +28,9 @@ This project is built using a modern, lightweight Python stack designed for fast
 
 **To run the API Server (Backend)**:
 ```bash
-uvicorn app.api:app --reload
+uvicorn app.api:app --reload --port 8001
 ```
-Once running, the backend API is available at `http://127.0.0.1:8000`. You can view the Swagger UI at `http://127.0.0.1:8000/docs`.
+Once running, the backend API is available at `http://127.0.0.1:8001`. You can view the Swagger UI at `http://127.0.0.1:8001/docs`.
 
 **To run the Web Dashboard (Frontend)**:
 Open a new terminal (leave the backend running) and start the local server:
@@ -41,7 +41,7 @@ Once running, navigate to `http://127.0.0.1:8080` in your browser to access the 
 
 **To run the MCP Server**:
 ```bash
-npx @modelcontextprotocol/inspector python app/mcp_server.py
+npx @modelcontextprotocol/inspector python -m app.mcp_server
 ```
 *(This starts the interactive MCP Inspector, allowing you to test the AI tools directly in your browser)*
 
