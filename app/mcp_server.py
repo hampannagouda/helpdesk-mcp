@@ -3,8 +3,12 @@ from app.db import (
     create_ticket as db_create_ticket,
     update_ticket_priority as db_update_priority,
     update_ticket_status as db_update_status,
-    get_open_tickets as db_get_open_tickets
+    get_open_tickets as db_get_open_tickets,
+    create_table as db_create_table,
 )
+
+# Ensure the database and tickets table exist before starting the MCP server.
+db_create_table()
 
 # Initialize FastMCP server
 mcp = FastMCP("HelpDesk")
