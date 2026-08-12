@@ -32,6 +32,27 @@ uvicorn app.api:app --reload --port 8001
 ```
 Once running, the backend API is available at `http://127.0.0.1:8001`. You can view the Swagger UI at `http://127.0.0.1:8001/docs`.
 
+### Using Claude
+
+To connect the app to Anthropic Claude instead of Gemini, create a `.env` file with the following values:
+```ini
+AI_PROVIDER=claude
+ANTHROPIC_API_KEY=your_claude_api_key_here
+ANTHROPIC_MODEL=claude-3.5-mini
+# Optional: local Claude server URL
+ANTHROPIC_API_URL=https://api.anthropic.com/v1/complete
+```
+If you are running Claude locally, set `ANTHROPIC_API_URL` to your local Claude endpoint, for example:
+```ini
+AI_PROVIDER=claude
+ANTHROPIC_API_KEY=your_claude_api_key_here
+ANTHROPIC_MODEL=claude-3.5-mini
+ANTHROPIC_API_URL=http://127.0.0.1:8080/v1/complete
+```
+Then restart the FastAPI server.
+
+> If you want to continue using Gemini later, set `AI_PROVIDER=gemini` and add `GEMINI_API_KEY` instead.
+
 **To run the Web Dashboard (Frontend)**:
 Open a new terminal (leave the backend running) and start the local server:
 ```bash
