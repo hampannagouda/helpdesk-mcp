@@ -9,3 +9,18 @@ python -m http.server 8080 --directory frontend
 npx @modelcontextprotocol/inspector python -m app.mcp_server
 node -v
 winget --version
+
+Here are the commands to run it yourself. Open a terminal in the project folder first:
+
+cd C:\Users\GoudaHam\Downloads\projects\helpdesk-mcp
+1. Start the backend API (FastAPI on port 8001):
+
+python -m uvicorn app.api:app --reload --port 8001
+2. Start the frontend (in a second terminal, also from the project folder):
+
+python -m http.server 8080 --directory frontend
+Then open http://127.0.0.1:8080/ in your browser — the frontend talks to the API on port 8001.
+
+Optional — to test the MCP server standalone with the MCP Inspector:
+
+npx @modelcontextprotocol/inspector python -m app.mcp_server
